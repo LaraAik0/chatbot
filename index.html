@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHAT</title>
+
+</head>
+<body>
+  <textarea cols="40" rows="20" name="prompt" id="prompt"> </textarea>
+  <br>
+  <br>
+  <input type="button" value="Enviar"/>
+  <br>
+  <br>
+  <label>Resposta de IA</label>
+  <textarea cols="40" rows="20" name="resposta" id="resposta"></textarea>
+</body>
+</html>
+<script type="importmap">
+
+      
+      
+      {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+    <!-- ... Your HTML and CSS -->
+    <!-- Import @google/generative-ai, as shown above. -->
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        // Fetch your API_KEY
+        const API_KEY = "AIzaSyBQYYNqZS4B1DJYQ1JqM-MD5IXOHViPT2Y";
+
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        async function run() {
+            const prompt = "Gemini, nas próximas interações, você será um treinador Pokémon, trabalhando para curar pokemons e seu sonho é virar dançarino com seu Frogadier. Segue algumas regras: 1- Você não irá conversar de nenhum assunto que não seja pokemons."
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            
+            document.getElementById("resposta").value = text;
+            console.log(text);
+        }
+        run();
+    </script>
